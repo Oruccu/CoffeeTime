@@ -1,4 +1,4 @@
-import { SafeAreaView, Image, Text, View } from "react-native";
+import { SafeAreaView, Image, Text, View, Alert } from "react-native";
 import React, { useState } from "react";
 import styles from './Home.Styles'
 import CoffeeButton from '../../components/HomeScreen/CoffeeButton'
@@ -6,6 +6,8 @@ import DropdownCard from '../../components/HomeScreen/DropdownCard';
 import CupSize from '../../components/HomeScreen/CupSize'
 import Button from '../../components/Button'
 import { auth , database } from "../../../firebaseConfig";
+import { onValue, ref } from "firebase/database";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const data = [
@@ -26,7 +28,8 @@ const Home = () => {
   const [small, setSmall] = useState(false);
   const [medium, setMedium] = useState(false);
   const [large, setLarge] = useState(false);
-  const [caffeine, setCaffeine] = useState(0);
+  const [coffeine, setCoffeine] = useState(0);
+  var cup = '';
 
   function Decrement() {
     if (coffee > 0) {
@@ -37,17 +40,27 @@ const Home = () => {
   function Increment() {
     setCoffe(coffee + 1)
   }
-
-  const Calculate = () => {
-    if(small == true){
-      if(value == 1){
-        console.log('burada')
-        setCaffeine(50)
-      }
-    }
-  }
-
   
+  const Calculate = () => {
+    if(small == 0 && medium == 0 && large == 0 ){
+      return Alert.alert('Kahvenizin boyutunu seçiniz')
+    }
+    if(small == 1){
+      cup= 'Small'
+    }
+    if(medium == 1){
+      cup= 'Medium'
+    }
+    if(large == 1){
+      cup= 'Large'
+    }
+  const refData = ref(database, `Coffee/${value}/${cup}`)
+  onValue(refData, (snapshot) =>{
+    const data = snapshot.val();
+    const dataCoffee= data*coffee;
+    setCoffeine(dataCoffee)
+  })
+  }
   function selectCoffee(item) {
     setValue(item.value)
     console.log(item)
@@ -92,7 +105,7 @@ const Home = () => {
           setMedium(false)
         }} />
       <View style={styles.Answer}>
-        <Text style={styles.AnswerText}>Tüketilen kafein oranı: {caffeine} </Text>
+        <Text style={styles.AnswerText}>Tüketilen kafein oranı: {coffeine} </Text>
       </View>
       <Button THEME={'Secondary'} ButtonName={'Hesapla'} handlePress={Calculate} />
     </SafeAreaView>
@@ -100,16 +113,3 @@ const Home = () => {
 };
 
 export default Home;
-
-/**
- * Espresso
- * Americano
- * Cappuccino
- * Frappe
- * Latte
- * Macchiato
- * Mocha
- * Marocchino
- * Filtre Kahve
- * Soğuk Kahve
- */

@@ -13,6 +13,8 @@ import Context from './pages/Auth/Context'
 import LogIn from './pages/Auth/LogIn'
 import Register from './pages/Auth/Register'
 import { auth } from '../firebaseConfig'
+import { Provider } from 'react-redux';
+import {store} from './Context/Store';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -80,6 +82,8 @@ export default function App() {
   }, [])
 
   return (
+    <Provider store={store}>
+
     <NavigationContainer>
       <Stack.Navigator 
       screenOptions={{ 
@@ -88,9 +92,9 @@ export default function App() {
       {
         !userSession ? (
           <Stack.Screen name='AuthStack' component={AuthStack} />
-
-        ):(
-          <>
+          
+          ):(
+            <>
           <Stack.Screen name='Root' component={Root} />
           </>
           )
@@ -99,6 +103,7 @@ export default function App() {
 
       </Stack.Navigator>
     </NavigationContainer>
+</Provider>
   );
 }
 

@@ -5,7 +5,7 @@ import Button from '../../components/Button'
 import { auth } from '../../../firebaseConfig'
 import CheckBox from 'expo-checkbox'
 import Color from '../../styles/Color'
-import UserModal from '../../components/UserModal'
+import UserModal from '../../components/Modal/UserModal'
 
 
 const Settings = () => {
@@ -27,7 +27,7 @@ const Settings = () => {
         <TouchableOpacity onPress={handleInputToggle}>
           <View style={styles.userContainer}>
             <Text style={styles.languageText}>
-              Bilgilerinizi Giriniz
+              Bilgilerinizi Giriniz...
             </Text>
           </View>
         </TouchableOpacity>

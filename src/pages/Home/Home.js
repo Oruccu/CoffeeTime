@@ -5,11 +5,12 @@ import CoffeeButton from '../../components/HomeScreen/CoffeeButton'
 import DropdownCard from '../../components/HomeScreen/DropdownCard';
 import CupSize from '../../components/HomeScreen/CupSize'
 import Button from '../../components/Button'
-import { auth , database } from "../../../firebaseConfig";
-import { onValue, ref } from "firebase/database";
+import { auth, database } from "../../../firebaseConfig";
+import { onValue, push, ref, set } from "firebase/database";
 import { useSelector } from "react-redux";
 
 const Home = () => {
+
   const data = [
     { label: 'Espresso', value: '1' },
     { label: 'Americano', value: '2' },
@@ -28,7 +29,8 @@ const Home = () => {
   const [small, setSmall] = useState(false);
   const [medium, setMedium] = useState(false);
   const [large, setLarge] = useState(false);
-  const [coffeine, setCoffeine] = useState(0);
+  const [coffeine, setCoffeine] = useState('');
+  const [coffeeName, setCoffeeName] = useState('')
   var cup = '';
 
   function Decrement() {
@@ -40,31 +42,48 @@ const Home = () => {
   function Increment() {
     setCoffe(coffee + 1)
   }
-  
+
   const Calculate = () => {
-    if(small == 0 && medium == 0 && large == 0 ){
+
+    if (small == 0 && medium == 0 && large == 0) {
       return Alert.alert('Kahvenizin boyutunu seçiniz')
     }
-    if(small == 1){
-      cup= 'Small'
+    if (small == 1) {
+      cup = 'Small'
     }
-    if(medium == 1){
-      cup= 'Medium'
+    if (medium == 1) {
+      cup = 'Medium'
     }
-    if(large == 1){
-      cup= 'Large'
+    if (large == 1) {
+      cup = 'Large'
     }
-  const refData = ref(database, `Coffee/${value}/${cup}`)
-  onValue(refData, (snapshot) =>{
-    const data = snapshot.val();
-    const dataCoffee= data*coffee;
-    setCoffeine(dataCoffee)
-  })
+
+    const refData = ref(database, `Coffee/CoffeData/${value}/${cup}`)
+    onValue(refData, (snapshot) => {
+      const data = snapshot.val(); 
+      setCoffeine(data)
+    })
+
   }
+
   function selectCoffee(item) {
     setValue(item.value)
-    console.log(item)
+    setCoffeeName(item.label)
   }
+
+  const SaveData = ()=>{
+    const pushData = {
+      coffeine: coffeine,
+      coffeeName: coffeeName,
+      date: new Date().toISOString(),
+      coffeequantity: coffee,
+      CupSize: cup
+    }
+    if(coffeine!=0){
+      push(ref(database, 'UsedCoffe/'), { pushData })
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container} >
       <Image style={styles.image} source={require('../../Assets/coffeecard1.jpg')} />
@@ -105,9 +124,22 @@ const Home = () => {
           setMedium(false)
         }} />
       <View style={styles.Answer}>
-        <Text style={styles.AnswerText}>Tüketilen kafein oranı: {coffeine} </Text>
+        <View style={styles.textContainer}>
+        <Text style={styles.AnswerText}>
+          Tüketilen kafein oranı: {coffeine}
+        </Text>
+        </View>
+        <Button 
+        THEME={'Primary'} 
+        ButtonName={'Kaydet'} 
+        handlePress={SaveData}/>
       </View>
-      <Button THEME={'Secondary'} ButtonName={'Hesapla'} handlePress={Calculate} />
+      <View style={styles.btn}>
+      <Button
+        THEME={'Secondary'}
+        ButtonName={'Hesapla'}
+        handlePress={Calculate} />
+        </View>
     </SafeAreaView>
   );
 };

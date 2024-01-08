@@ -32,12 +32,21 @@ export default StyleSheet.create({
       },
       Answer:{
         marginTop:30,
-        marginLeft:20,
-        flex:1
+        marginHorizontal:20,
+        flexDirection:'row',
+        alignItems:'center'
+        
       },
       AnswerText:{
         fontSize:20,
         color:Color.DarkBrown
+      },
+      btn:{
+        justifyContent:'flex-end',
+        flex:1
+      },
+      textContainer:{
+        flex:1
       }
  
 })

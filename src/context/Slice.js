@@ -9,6 +9,7 @@ const Slice = createSlice({
             age:'',
             weight:'',
         },
+
     },
     reducers:{
         setUser(state, action){

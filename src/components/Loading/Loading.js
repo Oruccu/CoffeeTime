@@ -7,7 +7,6 @@ const Loading = () => {
     <View style={styles.animationContainer}>
        <LottieView
         autoPlay
-        ref={animation}
         style={ styles.lottie}
         source={require('../../Assets/Animation/Loading.json')}
       />

@@ -14,7 +14,7 @@ import LogIn from './pages/Auth/LogIn'
 import Register from './pages/Auth/Register'
 import { auth } from '../firebaseConfig'
 import { Provider } from 'react-redux';
-import {store} from './Context/Store';
+import { store } from './Context/Store';
 import Loading from './components/Loading'
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -74,40 +74,47 @@ const AuthStack = () => {
 }
 
 export default function App() {
-  const[loading, setLoading]= useState(false);
+  const [loading, setLoading] = useState(false);
   const [userSession, setUserSession] = React.useState()
 
-  useEffect(() => {
 
-    auth.onAuthStateChanged(user => {
+  useEffect(() => {
+    setLoading(true)
+    auth.onAuthStateChanged(
+      user => {
       setUserSession(!!user)
+      setLoading(false)
     })
   }, [])
+  if(loading== true){
+    return <Loading/>
+  }
 
   return (
     <Provider store={store}>
 
-    <NavigationContainer>
-      <Stack.Navigator 
-      screenOptions={{ 
-        headerShown: false,
-        tabBarHideOnKeyboard: true, }}>
-      { 
-        !userSession ? (
-          
-          <Stack.Screen name='AuthStack' component={AuthStack} />
-          
-          ):(
-            <>
-          <Stack.Screen name='Root' component={Root} />
-          </>
-          )
-        }
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarHideOnKeyboard: true,
+          }}>
+          {
+            !userSession ? (
+
+              <Stack.Screen name='AuthStack' component={AuthStack} />
+
+            ) : (
+              <>
+                <Stack.Screen name='Root' component={Root} />
+              </>
+            )
+          }
 
 
-      </Stack.Navigator>
-    </NavigationContainer>
-</Provider>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -1,6 +1,6 @@
 
 import { StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,11 +15,12 @@ import Register from './pages/Auth/Register'
 import { auth } from '../firebaseConfig'
 import { Provider } from 'react-redux';
 import {store} from './Context/Store';
-
+import Loading from './components/Loading'
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Root() {
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -73,9 +74,11 @@ const AuthStack = () => {
 }
 
 export default function App() {
+  const[loading, setLoading]= useState(false);
   const [userSession, setUserSession] = React.useState()
 
   useEffect(() => {
+
     auth.onAuthStateChanged(user => {
       setUserSession(!!user)
     })
@@ -89,8 +92,9 @@ export default function App() {
       screenOptions={{ 
         headerShown: false,
         tabBarHideOnKeyboard: true, }}>
-      {
+      { 
         !userSession ? (
+          
           <Stack.Screen name='AuthStack' component={AuthStack} />
           
           ):(

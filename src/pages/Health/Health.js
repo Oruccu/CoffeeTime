@@ -16,14 +16,14 @@ const Health = () => {
     const refData = ref(database, 'UsedCoffe/')
     onValue(refData, (snapshot) => {
       const data = snapshot.val();
-      console.log(data)
+      //console.log(data)
       const parsedData = ParseData(data)
-      //console.log(parsedData);
+      console.log(parsedData);
       setCoffeeData(parsedData)
     })
   }, [])
 
-  const renderData = ({ item }) => <CoffeeCard usedCoffee={item.pushData} />
+  const renderData = ({ item }) => <CoffeeCard usedCoffee={item.pushData} id={item.id}/>
   
 
   return (

@@ -22,5 +22,12 @@ export default StyleSheet.create({
     timeContainer:{
         alignItems:'flex-end',
 
+    },
+    innerContainer:{
+        flexDirection:'row',
+        marginRight:20
+    },
+    nameContainer:{
+        flex:1
     }
 })

@@ -58,10 +58,12 @@ const Home = () => {
       cup = 'Large'
     }
 
+
     const refData = ref(database, `Coffee/CoffeData/${value}/${cup}`)
     onValue(refData, (snapshot) => {
-      const data = snapshot.val(); 
-      setCoffeine(data)
+      const data = snapshot.val();
+      const newdata= data * coffee 
+      setCoffeine(newdata)
     })
 
   }
@@ -82,6 +84,7 @@ const Home = () => {
     if(coffeine!=0){
       push(ref(database, 'UsedCoffe/'), { pushData })
     }
+    setCoffeine(0)
   }
 
   return (

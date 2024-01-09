@@ -30,7 +30,7 @@ const CoffeeCard = ({ usedCoffee, id }) => {
           {usedCoffee.coffeeName}
         </Text>
           </View>
-          <Icon name='delete' size={25} color={Color.DarkBrown} onPress={deleteData}/>
+          
         </View>
         <Text style={styles.text}>
           Bardak Boyutu: {usedCoffee.CupSize}

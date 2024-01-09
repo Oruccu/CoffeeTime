@@ -1,4 +1,4 @@
-import { SafeAreaView, Image, Text, View, Alert } from "react-native";
+import { SafeAreaView, Image, Text, View, Alert, ImageBackground } from "react-native";
 import React, { useState } from "react";
 import styles from './Home.Styles'
 import CoffeeButton from '../../components/HomeScreen/CoffeeButton'
@@ -35,7 +35,7 @@ const Home = () => {
   const userMail = auth.currentUser.email
   const userId = auth.currentUser.uid
   console.log(userId)
-  
+
   function Decrement() {
     if (coffee > 0) {
       setCoffe(coffee - 1)
@@ -63,7 +63,7 @@ const Home = () => {
     const refData = ref(database, `Coffee/CoffeData/${value}/${cup}`)
     onValue(refData, (snapshot) => {
       const data = snapshot.val();
-      const newdata= data * coffee 
+      const newdata = data * coffee
       setCoffeine(newdata)
     })
 
@@ -74,7 +74,7 @@ const Home = () => {
     setCoffeeName(item.label)
   }
 
-  const SaveData = ()=>{
+  const SaveData = () => {
     const pushData = {
       user: userMail,
       coffeine: coffeine,
@@ -83,70 +83,82 @@ const Home = () => {
       coffeequantity: coffee,
       CupSize: cup
     }
-    if(coffeine!=0){
+    if (coffeine != 0) {
       push(ref(database, `UsedCoffe/${userId}`), { pushData })
     }
     setCoffeine(0)
   }
 
   return (
-    <SafeAreaView style={styles.container} >
-      <Image style={styles.image} source={require('../../Assets/coffeecard1.jpg')} />
-      <View style={styles.dropcontainer}>
-        <DropdownCard
-          data={data}
-          value={value}
-          label='label'
-          changeData={selectCoffee} />
-        <View style={styles.coffecupcontainer}>
-          <View style={styles.coffeetext}>
-            <Text style={styles.text}>{coffee}</Text>
+    <ImageBackground style={styles.image} source={require('../../Assets/test1.jpeg')} >
+      <View style={styles.test} />
+      <View style={styles.container}>
+        <View style={styles.innercontainer}>
+          <View style={styles.coffeedrop} >
+            <DropdownCard
+              data={data}
+              value={value}
+              label='label'
+              changeData={selectCoffee} />
           </View>
-          <CoffeeButton
-            text={'+'}
-            onPress={Increment}
-            THEME={'Left'} />
-          <CoffeeButton
-            text={'-'}
-            onPress={Decrement}
-            THEME={'Right'} />
+          <View style={styles.coffecupcontainer}>
+            <View style={styles.coffeetext}>
+              <Text style={styles.text}>{coffee}</Text>
+            </View>
+            <CoffeeButton
+              text={'+'}
+              onPress={Increment}
+              THEME={'Left'} />
+            <CoffeeButton
+              text={'-'}
+              onPress={Decrement}
+              THEME={'Right'} />
+          </View>
         </View>
+        <CupSize
+          Small={(item) => {
+            setSmall(!small)
+            setMedium(false)
+            setLarge(false)
+          }}
+          Medium={(item) => {
+            setMedium(!medium)
+            setSmall(false)
+            setLarge(false)
+          }}
+          Large={(item) => {
+            setLarge(!large)
+            setSmall(false)
+            setMedium(false)
+          }} />
+        <View style={styles.Answer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.AnswerText}>
+              Tüketilen kafein oranı: {coffeine}
+            </Text>
+          </View>
+        </View>
+        <Button
+          THEME={'Secondary'}
+          ButtonName={'Hesapla'}
+          handlePress={Calculate} />
+        <Button
+          THEME={'Primary'}
+          ButtonName={'Kaydet'}
+          handlePress={SaveData} />
       </View>
-      <CupSize
-        Small={(item) => {
-          setSmall(!small)
-          setMedium(false)
-          setLarge(false)
-        }}
-        Medium={(item) => {
-          setMedium(!medium)
-          setSmall(false)
-          setLarge(false)
-        }}
-        Large={(item) => {
-          setLarge(!large)
-          setSmall(false)
-          setMedium(false)
-        }} />
-      <View style={styles.Answer}>
-        <View style={styles.textContainer}>
-        <Text style={styles.AnswerText}>
-          Tüketilen kafein oranı: {coffeine}
-        </Text>
-        </View>
-        <Button 
-        THEME={'Primary'} 
-        ButtonName={'Kaydet'} 
-        handlePress={SaveData}/>
-      </View>
-      <View style={styles.btn}>
-      <Button
-        THEME={'Secondary'}
-        ButtonName={'Hesapla'}
-        handlePress={Calculate} />
-        </View>
-    </SafeAreaView>
+
+    </ImageBackground>
+
   );
 };
 
 export default Home;
+
+/*
+<View style={styles.container}>
+      
+      
+    
+      
+*/

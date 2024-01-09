@@ -70,6 +70,7 @@ const Register = ({ navigation }) => {
   return (
     <View style={styles.container}>
           <View style={styles.textcontainer}>
+          <Image style={styles.image} source={require('../../../Assets/coffee.png')}/>
         <Text style={styles.text}>Kahve Zamanı</Text>
         </View>
       <View style={styles.innercontainer}>

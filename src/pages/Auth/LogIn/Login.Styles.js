@@ -19,13 +19,20 @@ export default StyleSheet.create({
         marginTop: 20
     },
     text: {
-        fontSize: 27,
+        fontSize: 40,
         color: Color.Brown,
+        fontWeight:'bold'
     },
     textcontainer: {
         justifyContent:'center',
         alignItems:'center',
         borderRadius:30,
-        marginTop:200
+        marginTop:100,
+
+    },
+    image:{
+        height:100,
+        width:100,
+        
     }
 })

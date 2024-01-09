@@ -4,25 +4,34 @@ const WIDTH = Dimensions.get('screen').width
 const HEIGHT = Dimensions.get('screen').height
 export default StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor:'white'
+        width:WIDTH,
+        height:HEIGHT/1.5,
+        backgroundColor:Color.Cream,
+        borderTopLeftRadius:50,
+        borderTopRightRadius:50,
+      },
+      test:{
+        flex:1
       },
       image: {
-          width: WIDTH,
-          height: HEIGHT / 3.5
+         flex:1
       },
-      dropcontainer: {
-          flexDirection:'row',
-          marginRight:10,
-          marginLeft:10,
-          justifyContent:'center',
-          alignItems:'center',
+      coffeedrop:{
+        flex:1
       },
       coffecupcontainer:{
-          flex:1,
           flexDirection:'row',
           justifyContent:'center',
-          alignItems:'center'
+          alignItems:'center',
+          flex:1
+      },
+      innercontainer: {
+          flexDirection:'row',
+          marginRight:15,
+          marginLeft:20,
+          justifyContent:'center',
+          alignItems:'center',
+          marginTop:20
       },
       coffeetext:{
         marginRight:10
@@ -31,11 +40,9 @@ export default StyleSheet.create({
         fontSize:20,
       },
       Answer:{
-        marginTop:30,
+        flex:1,
         marginHorizontal:20,
         flexDirection:'row',
-        alignItems:'center'
-        
       },
       AnswerText:{
         fontSize:20,
@@ -43,10 +50,9 @@ export default StyleSheet.create({
       },
       btn:{
         justifyContent:'flex-end',
-        flex:1
       },
       textContainer:{
         flex:1
-      }
+      } 
  
 })

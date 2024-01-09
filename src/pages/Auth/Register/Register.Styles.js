@@ -24,12 +24,17 @@ export default StyleSheet.create({
         color: Color.Brown,
     },
     text: {
-        fontSize: 27,
+        fontSize: 40,
         color: Color.Brown,
+        fontWeight:'bold'
     },
     textcontainer: {
         justifyContent:'center',
         alignItems:'center',
-        marginTop:100
+        marginTop:50
+    },
+    image:{
+        height:100,
+        width:100,
     }
 })

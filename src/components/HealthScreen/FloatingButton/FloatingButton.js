@@ -6,7 +6,7 @@ const FloatingButton = ({PressIcon}) => {
         <TouchableOpacity onPress={PressIcon}>
             <View style={styles.container}>
                 <Image
-                    source={require('../../Assets/coffee.png')}
+                    source={require('../../../Assets/coffee.png')}
                     style={styles.image} />
             </View>
         </TouchableOpacity>

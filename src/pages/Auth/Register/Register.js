@@ -69,8 +69,6 @@ const Register = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../../../Assets/mobile-1.jpeg')} style={styles.image} />
           <View style={styles.textcontainer}>
         <Text style={styles.text}>Kahve Zamanı</Text>
         </View>

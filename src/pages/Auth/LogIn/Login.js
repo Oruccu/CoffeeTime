@@ -1,4 +1,4 @@
-import { View, Image, Text, KeyboardAvoidingView } from 'react-native'
+import { View, Image, Text, KeyboardAvoidingView, ImageBackground } from 'react-native'
 import React from 'react'
 import Input from '../../../components/Input'
 import Button from '../../../components/Button'
@@ -38,22 +38,19 @@ const Login = ({ navigation }) => {
   })
 
   return (
-
-      <View style={styles.container}>
-        <Image
-          source={require('../../../Assets/mobile-1.jpeg')} style={styles.image} />
+    <View style={styles.container}>
         <View style={styles.textcontainer}>
           <Text style={styles.text}>Kahve Zamanı</Text>
         </View>
         <View style={styles.innercontainer}>
-        
-
+      <KeyboardAvoidingView>
           <Formik
             initialValues={initialValues}
             onSubmit={SingIn}
             validationSchema={LoginSchema}>
             {({ handleChange, handleSubmit, values, errors, touched }) => (
               <>
+
                 <Input
                   placeholder={'E-Mail'}
                   onChangeText={handleChange('email')}
@@ -73,13 +70,16 @@ const Login = ({ navigation }) => {
             )}
           </Formik>
           <Button
-            ButtonName={'Kayıt Ol'}
-            THEME={'Secondary'}
-            handlePress={goRegister} />
-            
+          ButtonName={'Kayıt Ol'}
+          THEME={'Secondary'}
+          handlePress={goRegister} />
+          
+          </KeyboardAvoidingView>
+          
         </View>
       </View>
-   
+
+         
   )
 }
 

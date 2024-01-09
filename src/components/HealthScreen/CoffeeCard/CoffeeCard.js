@@ -4,9 +4,9 @@ import styles from './CoffeeCard.Style'
 import { formatDistance, parseISO, } from 'date-fns'
 import { tr } from 'date-fns/locale'
 import Icon from '@expo/vector-icons/AntDesign'
-import Color from '../../styles/Color'
+import Color from '../../../styles/Color'
 import { remove, ref } from 'firebase/database';
-import {database} from '../../../firebaseConfig'
+import {database} from '../../../../firebaseConfig'
 const CoffeeCard = ({ usedCoffee, id }) => {
 
   const formatedDate = formatDistance(parseISO(usedCoffee.date), new Date(), {

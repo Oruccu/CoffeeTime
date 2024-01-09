@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, Platform } from "react-native"
 import Color from "../../styles/Color"
 export default StyleSheet.create({
     container:{
@@ -24,11 +24,22 @@ export default StyleSheet.create({
         marginLeft:15
     },
     userContainer:{
-        margin:10,
-        padding:10,
+        
         borderWidth:0.5,
         borderColor:Color.Brown,
-        borderRadius:20
+        borderRadius:20,
+        ...Platform.select({
+            ios: {
+                margin:10,
+                padding:10,
+                
+            },
+            android: {
+                margin:10,
+                padding:10,
+                marginTop: 50,
+            }}),
+        
 
     },
     languageContainer:{

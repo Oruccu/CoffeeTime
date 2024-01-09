@@ -6,18 +6,8 @@ export default StyleSheet.create({
         flex: 1,
     },
     image: {
-        flex: 1.4,
-        borderBottomLeftRadius: 500,
-        ...Platform.select({
-            ios: {
-                resizeMode: 'cover',
-            },
-            android: {
-                width: 395,
-                height: 500,
-                marginLeft: 50,
-            },
-        }),
+        height:300,
+        width:500
     },
     innercontainer: {
         ...Platform.select({
@@ -38,6 +28,8 @@ export default StyleSheet.create({
         color: Color.Brown,
     },
     textcontainer: {
-        marginLeft: 15
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop:100
     }
 })

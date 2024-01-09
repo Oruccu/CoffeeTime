@@ -4,10 +4,10 @@ import styles from './Health.Styles'
 import { database, auth } from "../../../firebaseConfig";
 import { useSelector } from 'react-redux'
 import ParseData from '../../utils/ParseData'
-import CoffeeCard from '../../components/CoffeeCard'
+import CoffeeCard from '../../components/HealthScreen/CoffeeCard'
 import { onValue, ref } from 'firebase/database'
 import Loading from '../../components/Loading';
-import FloatingButton from '../../components/FloatingButton'
+import FloatingButton from '../../components/HealthScreen/FloatingButton'
 import CoffeineModal from '../../components/Modal/CaffeineModal/CoffeineModal';
 const Health = () => {
   const [coffeeData, setCoffeeData] = useState([])

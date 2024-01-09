@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import Color from "../../../styles/Color";
 const HEIGHT = Dimensions.get('screen').height
 export default StyleSheet.create({
@@ -6,15 +6,10 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
     },
-    image: {
-        borderBottomLeftRadius: 500,
-        resizeMode:'cover',
-        maxHeight:HEIGHT/2.6
-
-    },
     innercontainer: {
+        flex:1,
         margin:10,
-
+        marginTop:30
     },
     message: {
         marginLeft: 15,
@@ -28,6 +23,9 @@ export default StyleSheet.create({
         color: Color.Brown,
     },
     textcontainer: {
-        marginLeft: 15
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:30,
+        marginTop:200
     }
 })

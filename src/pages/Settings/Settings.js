@@ -6,7 +6,7 @@ import { auth } from '../../../firebaseConfig'
 import UserModal from '../../components/Modal/UserModal'
 import { useTranslation } from 'react-i18next'
 import i18next from '../../Translate/i18n'
-import LanguageButton from '../../components/LanguageButton'
+import LanguageButton from '../../components/SettingsScreen/LanguageButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLanguage } from '../../Context/Slice'
 const Settings = () => {

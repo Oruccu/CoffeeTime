@@ -1,4 +1,16 @@
 {
-    "welcome": "Welcome to our app!",
-    "hello": "Hello, {{name}}!"
-  }
+    "Kahveniseç": "Choose your coffee",
+    "Size": "Size",
+    "Tüketilekafeinoranı":"Rate of Caffeine Consumed",
+    "Kaydet":"Save",
+    "Hesapla":"Calculate",
+    "Hoşgeldin":"Welcome",
+    "BardakBoyutu":"Cup Size",
+    "KahveAdedi":"Coffee Quantity",
+    "TüketilenKafeinMiktarı": "Amount of Caffeine Consumed",
+    "BilgileriniziGiriniz":"Enter Your User Information",
+    "UygulamaDiliniSeçiniz":"Select Application Language",
+    "İngilizce":"English",
+    "Türkçe":"Turkish",
+    "ÇıkışYap": "Log Out"
+}

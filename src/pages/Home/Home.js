@@ -5,7 +5,7 @@ import CoffeeButton from '../../components/HomeScreen/CoffeeButton'
 import DropdownCard from '../../components/HomeScreen/DropdownCard';
 import CupSize from '../../components/HomeScreen/CupSize'
 import Button from '../../components/Button'
-import { auth, database } from "../../../firebaseConfig";
+import { database } from "../../../firebaseConfig";
 import { onValue, push, ref, set } from "firebase/database";
 import { useSelector } from "react-redux";
 
@@ -57,8 +57,6 @@ const Home = () => {
     if (large == 1) {
       cup = 'Large'
     }
-
-
     const refData = ref(database, `Coffee/CoffeData/${value}/${cup}`)
     onValue(refData, (snapshot) => {
       const data = snapshot.val();

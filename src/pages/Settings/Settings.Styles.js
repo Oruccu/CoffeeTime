@@ -17,8 +17,8 @@ export default StyleSheet.create({
     },
     Box:{
         flexDirection:'row',
-        alignItems:'center',
-        marginTop:15
+        justifyContent:'flex-start'
+
     },
     margin:{
         marginLeft:15

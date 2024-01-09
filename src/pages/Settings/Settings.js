@@ -3,15 +3,16 @@ import React, { useState } from 'react'
 import styles from './Settings.Styles'
 import Button from '../../components/Button'
 import { auth } from '../../../firebaseConfig'
-import CheckBox from 'expo-checkbox'
-import Color from '../../styles/Color'
 import UserModal from '../../components/Modal/UserModal'
-
-
+import { useTranslation } from 'react-i18next'
+import i18next from '../../Translate/i18n'
+import LanguageButton from '../../components/LanguageButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLanguage } from '../../Context/Slice'
 const Settings = () => {
-  const [languagetr, setLanguagetr] = useState(false)
-  const [languageen, setLanguageen] = useState(false)
   const [modalisVisible, setModalisVisible] = useState(false)
+  const {t} = useTranslation();
+  const dispatch = useDispatch();
 
   function LogOut() {
     auth.signOut();
@@ -21,17 +22,35 @@ const Settings = () => {
     setModalisVisible(!modalisVisible)
   }
 
+  const languagetr = () =>{
+    dispatch(
+      setLanguage({
+          selectLanguage: 'tr'
+      }))
+    i18next.changeLanguage('tr')
+  }
+
+  const languageen = () =>{
+    dispatch(
+      setLanguage({
+        selectLanguage: 'en'
+      })) 
+    i18next.changeLanguage('en')
+  }
+
+  const language = useSelector(state => state.selectLanguage)
+  console.log(language)
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
         <TouchableOpacity onPress={handleInputToggle}>
           <View style={styles.userContainer}>
             <Text style={styles.languageText}>
-              Bilgilerinizi Giriniz...
+              {t('BilgileriniziGiriniz')}
             </Text>
           </View>
         </TouchableOpacity>
-        
         <UserModal
           visible={modalisVisible}
           closeModal={handleInputToggle}
@@ -39,29 +58,12 @@ const Settings = () => {
     
         <View style={styles.languageContainer}>
           <Text style={styles.languageText}>
-            Uygulama Dilini Seçiniz...
+            {t('UygulamaDiliniSeçiniz')}
           </Text>
           <View style={styles.Box}>
-            <Text style={styles.languageText}>
-              İngilizce
-            </Text>
-            <CheckBox
-              style={styles.checkBox}
-              value={languageen}
-              onValueChange={setLanguageen}
-              color={setLanguageen ? Color.Brown : undefined}
-              disabled={languagetr == true}
-            />
-            <Text style={styles.languageText}>
-              Türkçe
-            </Text>
-            <CheckBox
-              style={styles.checkBox}
-              value={languagetr}
-              onValueChange={setLanguagetr}
-              color={setLanguagetr ? Color.Brown : undefined}
-              disabled={languageen == true}
-            />
+            <LanguageButton title={t('Türkçe')} handlePress={languagetr}/>
+            <LanguageButton title={t('İngilizce')} handlePress={languageen}/>
+         
           </View>
         </View>
         <View style={styles.information}>

@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-
 const Slice = createSlice({
     name:'user',
     initialState:{
@@ -9,6 +7,7 @@ const Slice = createSlice({
             age:'',
             weight:'',
         },
+        selectLanguage: ''
 
     },
     reducers:{
@@ -21,9 +20,13 @@ const Slice = createSlice({
             state.user.age= age;
             state.user.weight= weight;
         },
+        setLanguage(state, action){
+            const selectLanguage = action.payload.selectLanguage;
+            state.selectLanguage = selectLanguage;
+        }
 
     }
 })
 
 export default Slice;
-export const {setUser} = Slice.actions;
+export const {setUser, setLanguage} = Slice.actions;

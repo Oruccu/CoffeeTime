@@ -6,10 +6,12 @@ import styles from './UserModal.Style'
 import Button from '../../Button'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../../Context/Slice'
 
 const UserModal = ({ visible, closeModal }) => {
+    const language = useSelector(state => state.t)
+    
     function initialValues() {
         userName = '',
         userAge = ''

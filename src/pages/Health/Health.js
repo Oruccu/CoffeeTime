@@ -1,7 +1,7 @@
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from './Health.Styles'
-import { database } from "../../../firebaseConfig";
+import { database, auth } from "../../../firebaseConfig";
 import { useSelector } from 'react-redux'
 import ParseData from '../../utils/ParseData'
 import CoffeeCard from '../../components/CoffeeCard'
@@ -14,19 +14,26 @@ const Health = () => {
   const [loading, setLoading] = useState(false);
   const UserData = useSelector(state => state.user)
   const [modalisVisible, setModalisVisible] = useState(false)
-
+  const userId = auth.currentUser.uid
+  
   useEffect(() => {
-    setLoading(true)
-    const refData = ref(database, 'UsedCoffe/')
-    onValue(refData, (snapshot) => {
-      const data = snapshot.val();
-      //console.log(data)
-      const parsedData = ParseData(data)
-      //console.log(parsedData);
-      setCoffeeData(parsedData)
-      setLoading(false)
-    })
+    try{
+      setLoading(true)
+      const refData = ref(database, `UsedCoffe/${userId}`)
+      onValue(refData, (snapshot) => {
+        const data = snapshot.val();
+        //console.log(data)
+        const parsedData = ParseData(data)
+        //console.log(parsedData);
+        setCoffeeData(parsedData)
+        setLoading(false)
+      })
+    }catch(err){
+      console.log(err)
+    }
+    
   }, [])
+
 
   const renderData = ({ item }) => 
   <CoffeeCard usedCoffee={item.pushData} id={item.id}/>

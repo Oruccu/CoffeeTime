@@ -3,28 +3,29 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-native-modal'
 import styles from './CoffeineModal.style'
 import { onValue, ref } from 'firebase/database'
-import { database } from '../../../../firebaseConfig'
+import { database, auth } from '../../../../firebaseConfig'
 import ParseData from '../../../utils/ParseData'
 const CoffeineModal = ({ visible, onClose }) => {
   const [coffeeData, setCoffeeData] = useState([])
   const [loading, setLoading] = useState(false);
-
+  const userId = auth.currentUser.uid
   useEffect(() => {
     setLoading(true)
-    const refData = ref(database, 'UsedCoffe/')
+    const refData = ref(database, `UsedCoffe/${userId}`)
     onValue(refData, (snapshot) => {
       const data = snapshot.val();
-      //console.log(data)
       const parsedData = ParseData(data)
-      //console.log(parsedData);
       setCoffeeData(parsedData)
       setLoading(false)
     })
   }, [])
-  const newData = coffeeData.map((item) => item.pushData.coffeine)
+
+  const newCoffeeData = coffeeData.map((item) => item.pushData.coffeine)
+  const TimeData = coffeeData.map((item) => item.pushData.date)
   var TotalCoffee = 0
-  for (let i = 0; i < newData.length; i++) {
-    const numberData = Number(newData[i])
+  
+  for (let i = 0; i < newCoffeeData.length; i++) {
+    const numberData = Number(newCoffeeData[i])
     TotalCoffee = TotalCoffee + numberData
   }
 
@@ -37,7 +38,9 @@ const CoffeineModal = ({ visible, onClose }) => {
         onSwipeComplete={onClose}
         onBackButtonPress={onClose}>
         <View style={styles.container}>
-          <Text>Bugün Tüketilen Kafein Oranı </Text>
+          <View>
+          <Text style={styles.title}>Bugün Tüketilen Kafein Oranı:  {TotalCoffee} </Text>
+          </View>
         </View>
       </Modal>
     </View>

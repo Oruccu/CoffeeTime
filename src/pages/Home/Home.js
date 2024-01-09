@@ -5,7 +5,7 @@ import CoffeeButton from '../../components/HomeScreen/CoffeeButton'
 import DropdownCard from '../../components/HomeScreen/DropdownCard';
 import CupSize from '../../components/HomeScreen/CupSize'
 import Button from '../../components/Button'
-import { database } from "../../../firebaseConfig";
+import { database, auth } from "../../../firebaseConfig";
 import { onValue, push, ref, set } from "firebase/database";
 import { useSelector } from "react-redux";
 
@@ -32,7 +32,10 @@ const Home = () => {
   const [coffeine, setCoffeine] = useState('');
   const [coffeeName, setCoffeeName] = useState('')
   var cup = '';
-
+  const userMail = auth.currentUser.email
+  const userId = auth.currentUser.uid
+  console.log(userId)
+  
   function Decrement() {
     if (coffee > 0) {
       setCoffe(coffee - 1)
@@ -73,6 +76,7 @@ const Home = () => {
 
   const SaveData = ()=>{
     const pushData = {
+      user: userMail,
       coffeine: coffeine,
       coffeeName: coffeeName,
       date: new Date().toISOString(),
@@ -80,7 +84,7 @@ const Home = () => {
       CupSize: cup
     }
     if(coffeine!=0){
-      push(ref(database, 'UsedCoffe/'), { pushData })
+      push(ref(database, `UsedCoffe/${userId}`), { pushData })
     }
     setCoffeine(0)
   }

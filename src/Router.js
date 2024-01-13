@@ -8,7 +8,6 @@ import Icon from '@expo/vector-icons/AntDesign'
 import Health from './pages/Health'
 import Home from './pages/Home'
 import Settings from './pages/Settings'
-import FirstCoffee from './pages/FirstCoffee';
 import Context from './pages/Auth/Context'
 import LogIn from './pages/Auth/LogIn'
 import Register from './pages/Auth/Register'

@@ -13,5 +13,13 @@ export default StyleSheet.create({
         marginLeft: 15,
         color: Color.Brown,
     },
+    image:{
+        width:50,
+        height:50
+    },
+    imageContainer:{
+        justifyContent:'center',
+        alignItems:'center'
+    }
 
 })

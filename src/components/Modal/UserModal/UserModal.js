@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
 import Input from '../../Input'
@@ -11,10 +11,10 @@ import { setUser } from '../../../Context/Slice'
 
 const UserModal = ({ visible, closeModal }) => {
     const language = useSelector(state => state.t)
-    
+
     function initialValues() {
         userName = '',
-        userAge = ''
+            userAge = ''
         userWeight = ''
     }
 
@@ -59,8 +59,12 @@ const UserModal = ({ visible, closeModal }) => {
                     onSubmit={SaveUser}
                     validationSchema={LoginSchema}>
                     {({ handleChange, handleSubmit, values, errors, touched }) => (
-
                         <View style={styles.container}>
+                            <View style={styles.imageContainer}>
+                                <Image
+                                    source={require('../../../Assets/coffee.png')}
+                                    style={styles.image} />
+                            </View>
                             <Input
                                 placeholder={'Adınızı giriniz'}
                                 onChangeText={handleChange('userName')}

@@ -5,7 +5,7 @@ import styles from './ImageCard.Styles'
 const ImageCard = ({title}) => {
     return (
         <View style={styles.container} >
-            <Image style={styles.image} source={require('../../../Assets/image-1.jpeg')}/>
+            <Image style={styles.image} source={require('../../../Assets/coffee-5.jpg')}/>
         </View>
     )
 }

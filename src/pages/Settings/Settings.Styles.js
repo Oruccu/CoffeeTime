@@ -54,6 +54,21 @@ export default StyleSheet.create({
         margin:10,
         borderWidth:1,
         borderColor:Color.Brown,
-        borderRadius:20
+        borderRadius:20,
+    },
+    informationText:{
+        fontSize:17,
+        padding:2,
+        color:Color.DarkBrown,
+        marginBottom:5,
+    },
+    informationContainer:{
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    image:{
+        width:30,
+        height:30,
     }
 })

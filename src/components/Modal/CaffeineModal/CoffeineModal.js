@@ -57,14 +57,14 @@ console.log(Caffeine)
   console.log(UsedCoffeine)
   const data = [
     {
-      name: "Kafein",
+      name: "mg Kafein",
       population: TotalCoffee,
       color: '#567189',
       legendFontColor: "#567189",
       legendFontSize: 15
     },
     {
-      name: "Kalan",
+      name: "mg Kalan",
       population: UsedCoffeine,
       color: '#EDE4E0',
       legendFontColor: "#567189",

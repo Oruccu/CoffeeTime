@@ -3,16 +3,16 @@ import Color from "../../../styles/Color";
 
 export default StyleSheet.create({
     dataContainer:{
-        width:50,
-        height:50,
-        borderWidth:0.2,
+        width:70,
+        height:70,
+        borderWidth:0.5,
         justifyContent:'center',
         alignItems:'center',
-        borderRadius:25,
-        borderColor:Color.DarkBrown
+        borderRadius:35,
+        borderColor:Color.DarkBrown,
     },
     data:{
-        fontSize:20,
+        fontSize:23,
         color:Color.Brown,
         fontWeight:'bold'
     },

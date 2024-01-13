@@ -33,7 +33,7 @@ const Home = () => {
   const [coffeine, setCoffeine] = useState(0);
   const [coffeeName, setCoffeeName] = useState('');
   const [coffeeData, setCoffeeData] = useState([])
-  const [success, setSuccess] = useState(false);
+
   var cup = '';
   const userMail = auth.currentUser.email
   const userId = auth.currentUser.uid
@@ -83,19 +83,18 @@ const Home = () => {
       CupSize: cup
     }
     if (coffeine != 0) {
-      setSuccess(true)
       try {
         push(ref(database, `UsedCoffe/${userId}`), { pushData })
       } catch (error) {
-        setSuccess(false)
         console.log(err)
       }
-      setSuccess(false)
     }
+    setCoffeine(0)
+    setCoffe(0)
   }
 
-  useEffect(() => {
 
+  useEffect(() => {
     const refData = ref(database, `UsedCoffe/${userId}`)
     onValue(refData, (snapshot) => {
       const data = snapshot.val();

@@ -19,7 +19,6 @@ const Health = () => {
   const userId = auth.currentUser.uid
 
   useEffect(() => {
-    try {
       setError(true)
       const refData = ref(database, `UsedCoffe/${userId}`)
       onValue(refData, (snapshot) => {
@@ -30,13 +29,8 @@ const Health = () => {
           setCoffeeData(parsedData)
           setError(false)
         }
-      })
-    } catch (error) {
-
-    }
+      }) 
   }, [])
-
-
   const renderData = ({ item }) =>
     <CoffeeCard usedCoffee={item.pushData} id={item.id} />
 
@@ -47,8 +41,6 @@ const Health = () => {
   function handleToggle() {
     setModalisVisible(!modalisVisible)
   }
-
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleContainer}>
@@ -65,9 +57,7 @@ const Health = () => {
             <CoffeineModal visible={modalisVisible} onClose={handleToggle}
             />
           </>
-
         ) : (
-
           <Error />
         )
       }

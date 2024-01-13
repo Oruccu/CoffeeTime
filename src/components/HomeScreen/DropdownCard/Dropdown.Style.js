@@ -6,7 +6,7 @@ export default StyleSheet.create({
     },
     dropdown: {
         height: 50,
-        borderColor: Color.Brown,
+        borderColor: Color.DarkBrown,
         borderWidth: 0.2,
         borderRadius: 8,
         paddingHorizontal: 8,
@@ -37,8 +37,6 @@ export default StyleSheet.create({
     },
     dropcontainer: {
         flexDirection:'row',
-        marginRight:10,
-        marginLeft:10,
         justifyContent:'center',
         alignItems:'center'
     },

@@ -26,8 +26,7 @@ export default {
             ...baseStyles.name,
             color:Colors.Cream,
         },
-        btnContainer:{
-        },   
+      
     }),
     Secondary: StyleSheet.create({
         container:{
@@ -40,4 +39,5 @@ export default {
             
         },
     }),
+
 }

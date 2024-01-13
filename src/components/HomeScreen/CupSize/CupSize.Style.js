@@ -1,39 +1,101 @@
 import { StyleSheet } from "react-native";
 import Color from '../../../styles/Color'
-export default StyleSheet.create({
-    container:{
-        flexDirection:'row',
-        margin:10,
-        borderBottomWidth:1,
-        padding:10,
-        borderColor:Color.LightBrown
+const baseStyle = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        margin: 10,
+        padding: 10,
     },
-    sizeContainer:{
-        flex:1,
-        alignContent:'center',
-        justifyContent:'center',
-        marginLeft:30,
+    imageContainer: {
+        flex: 1,
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    imageSmall:{
-        height:40,
-        width:40,
+    sizeContainer: {
+        flex: 1,
+        alignItems: 'stretch',
+        padding: 15,
+        justifyContent: 'center',
+        borderTopLeftRadius: 20,
     },
-    imageMedium:{
-        height:55,
-        width:55,
+    innerContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'baseline'
     },
-    imageLarge:{
-        height:65,
-        width:65,
-        
+    imageLarge: {
+        height: 50,
+        width: 40
     },
-    imageContainer:{
-        flex:1,
-        flexDirection:'row',
-        alignItems:'baseline'
+    imageMedium: {
+        height: 44,
+        width: 35
     },
-    size:{
-        fontSize:20,
-        color:Color.DarkBrown
+    imageSmall: {
+        height: 35,
+        width: 30
+    },
+    sizeText: {
+        color: Color.DarkBrown,
+        fontSize: 24
     }
 })
+export default {
+    Primary: StyleSheet.create({
+        container: {
+            ...baseStyle.container
+        },
+        imageContainer: {
+            ...baseStyle.imageContainer
+        },
+        sizeContainer: {
+            ...baseStyle.sizeContainer
+        },
+        innerContainer: {
+            ...baseStyle.innerContainer
+        },
+        imageLarge: {
+            ...baseStyle.imageLarge
+        },
+        imageMedium: {
+            ...baseStyle.imageMedium
+        },
+        imageSmall: {
+            ...baseStyle.imageSmall
+        },
+        sizeText: {
+            ...baseStyle.sizeText
+        }
+    }),
+    Secondary: StyleSheet.create({
+        container: {
+            ...baseStyle.container
+        },
+        imageContainer: {
+            ...baseStyle.imageContainer,
+            borderColor: Color.DarkBrown,
+            borderRadius: 10,
+            borderWidth: 0.2,
+        },
+        sizeContainer: {
+            ...baseStyle.sizeContainer
+        },
+        innerContainer: {
+            ...baseStyle.innerContainer
+        },
+        imageLarge: {
+            ...baseStyle.imageLarge
+        },
+        imageMedium: {
+            ...baseStyle.imageMedium
+        },
+        imageSmall: {
+            ...baseStyle.imageSmall
+        },
+        sizeText: {
+            ...baseStyle.sizeText
+        }
+    })
+}

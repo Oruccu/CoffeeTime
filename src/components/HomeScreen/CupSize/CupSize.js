@@ -1,27 +1,27 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import styles from './CupSize.Style'
-const CupSize = ({Small, Medium, Large}) => {
+const CupSize = ({ Small, Medium, Large, THEME }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.sizeContainer}>
-        <Text style={styles.size}>Size</Text>
+    <View style={styles['Primary'].container}>
+      <View style={styles['Primary'].sizeContainer}>
+        <Text style={styles['Primary'].sizeText}>Size</Text>
       </View>
-      <View style={styles.imageContainer}>
-        <TouchableOpacity onPress={Small} >
-          <View>
-            <Image source={require('../../../Assets/coffeeCup.png')} style={styles.imageSmall} />
+      <View style={styles['Primary'].innerContainer}>
+        <TouchableOpacity onPress={Small}>
+          <View style={styles[THEME].imageContainer} >
+          <Image style={styles['Primary'].imageSmall} source={require('../../../Assets/coffee-cup-4.png')} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={Medium}>
-          <View>
-            <Image source={require('../../../Assets/coffeeCup.png')} style={styles.imageMedium} />
+        <TouchableOpacity onPress={Medium} >
+          <View style={styles[THEME].imageContainer}>
+          <Image style={styles['Primary'].imageMedium} source={require('../../../Assets/coffee-cup-4.png')} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={Large} >
-          <View>
-            <Image source={require('../../../Assets/coffeeCup.png')} style={styles.imageLarge} />
-          </View>
+          <View style={styles[THEME].imageContainer}>
+          <Image style={styles['Primary'].imageLarge} source={require('../../../Assets/coffee-cup-4.png')} />
+          </View >
         </TouchableOpacity>
       </View>
     </View>

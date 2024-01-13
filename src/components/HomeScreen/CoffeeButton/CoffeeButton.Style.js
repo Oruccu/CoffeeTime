@@ -4,7 +4,7 @@ const baseStyle = StyleSheet.create({
     container:{
         margin:2,
         padding:5,
-        borderColor:Color.Brown,
+        borderColor:Color.DarkBrown,
         borderWidth:1,
         width:50,
         height:35,

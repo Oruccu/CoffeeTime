@@ -42,19 +42,12 @@ const CoffeineModal = ({ visible, onClose }) => {
     const numberData = Number(newCoffeeData[i])
     TotalCoffee = TotalCoffee + numberData
   }
-  var Caffeine = 0
-  if (UserAge > 18) {
-    Caffeine=400
-  } else {
-    Caffeine=200
-  }
-console.log(Caffeine)
-
 
   if(TotalCoffee<400){
     var UsedCoffeine = 400-TotalCoffee
   }
   console.log(UsedCoffeine)
+  
   const data = [
     {
       name: "mg Kafein",
@@ -89,8 +82,9 @@ console.log(Caffeine)
           </View>
           <View style={styles.innerContainer}>
             <Text style={styles.title}>Bugün Tüketilen Kafein Oranı:  {TotalCoffee} </Text>
-            <Text style={styles.title}>Tüketmeniz Gereken Kafein: {Caffeine} </Text>
+            <Text style={styles.title}>Tüketmeniz Gereken Kafein: {UsedCoffeine} </Text>
           </View>
+
           <View style={styles.LineChart} >
             <PieChart
               data={data}

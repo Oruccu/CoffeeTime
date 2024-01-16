@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-native-modal'
 import Input from '../../Input'
 import styles from './UserModal.Style'
@@ -8,15 +8,21 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../../Context/Slice'
+import { useTranslation } from 'react-i18next'
+import i18next from '../../../Translate/i18n'
 
 const UserModal = ({ visible, closeModal }) => {
-    const language = useSelector(state => state.t)
-
+    const { t } = useTranslation();
+    const language = useSelector(state => state.user.t)
     function initialValues() {
         userName = '',
             userAge = ''
         userWeight = ''
     }
+    useEffect(()=>{
+        i18next.changeLanguage(language)
+      }, [language])
+      
 
     const LoginSchema = yup.object().shape({
         userName: yup
@@ -66,25 +72,25 @@ const UserModal = ({ visible, closeModal }) => {
                                     style={styles.image} />
                             </View>
                             <Input
-                                placeholder={'Adınızı giriniz'}
+                                placeholder={t('AdınızıGiriniz')}
                                 onChangeText={handleChange('userName')}
                                 value={values.userName} />
                             {errors.userName && touched.userName &&
                                 <Text style={styles.message}>{errors.userName}</Text>}
                             <Input
-                                placeholder={'Yaşınızı giriniz'}
+                                placeholder={t('YaşınızıGiriniz')}
                                 onChangeText={handleChange('userAge')}
                                 value={values.userAge} />
                             {errors.userAge && touched.userAge &&
                                 <Text style={styles.message}>{errors.userAge}</Text>}
                             <Input
-                                placeholder={'Kilonuzu giriniz'}
+                                placeholder={t('KilonuzuGiriniz')}
                                 onChangeText={handleChange('userWeight')}
                                 value={values.userWeight} />
                             {errors.userWeight && touched.userWeight &&
                                 <Text style={styles.message}>{errors.userWeight}</Text>}
                             <Button
-                                ButtonName={'Kaydet'}
+                                ButtonName={t('Kaydet')}
                                 THEME={'Secondary'}
                                 handlePress={handleSubmit} />
                         </View>

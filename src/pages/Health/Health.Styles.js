@@ -2,9 +2,9 @@ import { StyleSheet } from "react-native";
 import Color from "../../styles/Color";
 export default StyleSheet.create({
     container:{
-        margin:10,
         padding:10,
-        flex:1
+        flex:1,
+        backgroundColor:Color.Cream
     },
     data:{
         fontSize:24,
@@ -13,6 +13,12 @@ export default StyleSheet.create({
     titleContainer:{
         marginLeft:20,
         marginBottom:5
+    },
+    iconContainer:{
+        justifyContent:'center',
+        alignItems:'center',
+        flex:1,
+        backgroundColor:Color.Cream
     }
 
 })

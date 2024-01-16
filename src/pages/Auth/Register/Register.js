@@ -1,5 +1,5 @@
 import { View, Image, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './Register.Styles'
 import Input from '../../../components/Input'
 import Button from '../../../components/Button'
@@ -7,8 +7,16 @@ import * as yup from 'yup'
 import { Formik } from 'formik'
 import {auth} from '../../../../firebaseConfig'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-
+import i18next from '../../../Translate/i18n'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 const Register = ({ navigation }) => {
+  const language = useSelector(state => state.user.t)
+  const { t } = useTranslation();
+
+  useEffect(()=>{
+    i18next.changeLanguage(language)
+  }, [language])
 
   function initialValues() {
     username = '',
@@ -34,35 +42,35 @@ const Register = ({ navigation }) => {
 
   const schemaRegister = yup.object({
     username: yup.string()
-    .required('Zorunlu alan')
-    .min(3, 'Geçersiz isim'),
+    .required(t('ZorunluAlan'))
+    .min(3, t('Geçersizisim')),
     email: yup
       .string()
-      .email()
-      .required('Zorunlu alan'),
+      .email(t('GeçersizE-Mail'))
+      .required(t('Zorunlualan')),
     password: yup
       .string()
-      .required('Zorunlu alan')
+      .required(t('Zorunlualan'))
       .matches(
         /^(?=.*[a-z])/,
-        " Bir küçük harf içermeli"
+        t("Birküçükharfiçermeli")
       )
       .matches(
         /^(?=.*[A-Z])/,
-        "Bir Büyük harf içermeli"
+        t("Birbüyükharfiçermeli")
       )
       .matches(
         /^(?=.*[0-9])/,
-        "Bir Sayı harf içermeli"
+        t("Birsayıiçermeli")
       )
       .matches(
         /^(?=.*[!@#\$%\^&\*])/,
-        "Özel karakter harf içermeli"
+        t("Özelkarakterharfiçermeli")
       ),
     confirmPassword: yup
       .string()
-      .required('Zorunlu alan')
-      .oneOf([yup.ref("password"), null], "Yanlış paralo")
+      .required(t('Zorunlualan'))
+      .oneOf([yup.ref("password"), null], t("Uyumsuzşifre"))
   });
   
 
@@ -71,7 +79,7 @@ const Register = ({ navigation }) => {
     <View style={styles.container}>
           <View style={styles.textcontainer}>
           <Image style={styles.image} source={require('../../../Assets/coffee.png')}/>
-        <Text style={styles.text}>Kahve Zamanı</Text>
+        <Text style={styles.text}>{t("KahveZamanı")}</Text>
         </View>
       <View style={styles.innercontainer}>
         <Formik
@@ -82,7 +90,7 @@ const Register = ({ navigation }) => {
           {({ handleChange, handleSubmit, values, errors, touched }) => (
             <>
               <Input
-                placeholder={'İsim'}
+                placeholder={t('İsim')}
                 onChangeText={handleChange('username')}
                 value={values.username} />
                 {errors.username && touched.username &&
@@ -94,27 +102,27 @@ const Register = ({ navigation }) => {
                 {errors.email && touched.email &&
                  <Text style={styles.message}>{errors.email}</Text>}
               <Input
-                placeholder={'Şifre'}
+                placeholder={t('Şifre')}
                 onChangeText={handleChange('password')}
                 value={values.password} />
               {errors.password && touched.password &&
                  <Text style={styles.message}>{errors.password}</Text>}
               <Input
-                placeholder={'Şifre'}
+                placeholder={t('Şifre')}
                 onChangeText={handleChange('confirmPassword')}
                 value={values.confirmPassword} />
               {errors.confirmPassword && touched.confirmPassword &&
                  <Text style={styles.message}>{errors.confirmPassword}</Text>}
               <Button
                 THEME={'Primary'}
-                ButtonName={'Kayıt Ol'}
+                ButtonName={t('KayıtOl')}
                 handlePress={handleSubmit} />
             </>
           )}
         </Formik>
         <Button
           THEME={'Secondary'}
-          ButtonName={'Giriş'}
+          ButtonName={t('GirişYap')}
           handlePress={goLogIn} />
       </View>
     </View>

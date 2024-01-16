@@ -1,49 +1,61 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './CoffeeCard.Style'
 import { formatDistance, parseISO, } from 'date-fns'
-import { tr } from 'date-fns/locale'
+import { tr, en } from 'date-fns/locale'
 import Icon from '@expo/vector-icons/AntDesign'
 import Color from '../../../styles/Color'
 import { remove, ref } from 'firebase/database';
-import {database} from '../../../../firebaseConfig'
-const CoffeeCard = ({ usedCoffee, id }) => {
+import { database } from '../../../../firebaseConfig';
+import { useTranslation } from 'react-i18next'
+import i18next from '../../../Translate/i18n'
+import { useSelector } from 'react-redux'
+import Swipeout from 'react-native-swipeout'
+const CoffeeCard = ({ usedCoffee, id, SwipeOut }) => {
+  const language = useSelector(state => state.user.t)
+  const { t } = useTranslation();
 
-  const formatedDate = formatDistance(parseISO(usedCoffee.date), new Date(), {
+  const formatedDate = formatDistance(parseISO(usedCoffee.date),
+    new Date(), {
     addSuffix: true,
-    locale: tr
+    locale: language == 'tr' ? tr : en
   });
-//remove(ref(database, 'REFERENCE_PATH'));
+
+  useEffect(() => {
+    i18next.changeLanguage(language)
+  }, [language])
+
+
+  //remove(ref(database, 'REFERENCE_PATH'));
   function deleteData() {
     console.log(id)
-    remove(ref(database, `Coffee/${id}` ))
+    remove(ref(database, `Coffee/${id}`))
   }
 
   return (
-
-    <View style={styles.container}>
-      <View>
+    <Swipeout
+      right={SwipeOut}
+      autoClose={true}
+      backgroundColor='#fffefc'>
+      <View style={styles.container}>
         <View style={styles.innerContainer}>
-          <View style={styles.nameContainer}>
-
-        <Text style={styles.coffeeName}>
-          {usedCoffee.coffeeName}
-        </Text>
-          </View>
-          
+          <Text style={styles.coffeeName}>
+            {usedCoffee.coffeeName}
+          </Text>
         </View>
-        
+        <View style={styles.information}>
+          <Text style={styles.text}>
+            {t("KahveAdedi")} {usedCoffee.coffeequantity}
+          </Text>
+          <Text style={styles.text}>
+            {t("TüketilenKafeinMiktarı")} {usedCoffee.coffeine}
+          </Text>
+        </View>
+        <View style={styles.timeContainer}>
+          <Text style={styles.time}>{formatedDate}</Text>
+        </View>
       </View>
-      <Text style={styles.text}>
-        Kahve Adedi: {usedCoffee.coffeequantity}
-      </Text>
-      <Text style={styles.text}>
-        Tüketilen Kafein Miktarı: {usedCoffee.coffeine}
-      </Text>
-      <View style={styles.timeContainer}>
-        <Text style={styles.time}>{formatedDate}</Text>
-      </View>
-    </View>
+    </Swipeout>
   )
 }
 

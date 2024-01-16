@@ -7,7 +7,8 @@ export default StyleSheet.create({
         borderWidth:1,
         borderColor:Color.Brown,
         borderRadius:20,
-        flex:1
+        flex:1,
+
     },
     text:{
         color:Color.DarkBrown
@@ -25,9 +26,10 @@ export default StyleSheet.create({
     },
     innerContainer:{
         flexDirection:'row',
-        marginRight:20
-    },
-    nameContainer:{
+        marginRight:20,
         flex:1
+    },
+    information:{
+        marginTop:10,
     }
 })

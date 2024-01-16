@@ -5,11 +5,16 @@ import { database, auth } from "../../../firebaseConfig";
 import { useSelector } from 'react-redux'
 import ParseData from '../../utils/ParseData'
 import CoffeeCard from '../../components/HealthScreen/CoffeeCard'
-import { onValue, ref } from 'firebase/database'
+import { onValue, ref, remove } from 'firebase/database'
 import Loading from '../../components/Loading';
 import Error from '../../components/Error';
 import FloatingButton from '../../components/HealthScreen/FloatingButton'
 import CoffeineModal from '../../components/Modal/CaffeineModal/CoffeineModal';
+import { useTranslation } from 'react-i18next'
+import i18next from '../../Translate/i18n'
+import Icon from '@expo/vector-icons/MaterialIcons'
+
+
 const Health = () => {
   const [coffeeData, setCoffeeData] = useState([])
   const [loading, setLoading] = useState(false);
@@ -17,6 +22,8 @@ const Health = () => {
   const UserData = useSelector(state => state.user)
   const [modalisVisible, setModalisVisible] = useState(false)
   const userId = auth.currentUser.uid
+  const language = useSelector(state => state.user.t)
+  const { t } = useTranslation();
 
   useEffect(() => {
       setError(true)
@@ -31,8 +38,35 @@ const Health = () => {
         }
       }) 
   }, [])
+
+  useEffect(()=>{
+    i18next.changeLanguage(language)
+  }, [language])
+
+
+  const handleSwipeoutPress = () => {
+   console.log('silll')
+  };
+  
+  const SwipeOutDelete =[
+    {
+      text: 'Sil',
+      onPress: (index) => handleSwipeoutPress(index),
+      component: (
+        <View style={styles.iconContainer}>
+          <Icon name="delete" size={40} color={'#936b5b'} />
+        </View>
+      ),
+    },
+  ];
+
+
+
   const renderData = ({ item }) =>
-    <CoffeeCard usedCoffee={item.pushData} id={item.id} />
+    <CoffeeCard 
+    usedCoffee={item.pushData} 
+    id={item.id} 
+    SwipeOut={SwipeOutDelete}  />
 
   if (loading == true) {
     return <Loading />
@@ -44,7 +78,7 @@ const Health = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.data}>Hoşgeldin {UserData.user.name}</Text>
+        <Text style={styles.data}>{t("Hoşgeldin")} {UserData.user.name}</Text>
       </View>
       {
         !error ? (
@@ -54,7 +88,9 @@ const Health = () => {
               renderItem={renderData} />
             <FloatingButton
               PressIcon={handleToggle} />
-            <CoffeineModal visible={modalisVisible} onClose={handleToggle}
+            <CoffeineModal 
+            visible={modalisVisible} 
+            onClose={handleToggle}
             />
           </>
         ) : (
@@ -67,6 +103,22 @@ const Health = () => {
 
 export default Health
 
+/**
+ * const handleSwipeoutPress = (index) => {
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
 
+    // Firebase veritabanından da silme işlemi
+    const databaseRef = firebase.database().ref('/kartlar');
+    databaseRef.child(data[index].id).remove()
+      .then(() => {
+        console.log('Veri başarıyla silindi.');
+      })
+      .catch((error) => {
+        console.error('Veri silinirken bir hata oluştu:', error);
+      });
+  };
+ */
 
 

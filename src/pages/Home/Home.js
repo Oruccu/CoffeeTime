@@ -10,8 +10,13 @@ import { onValue, push, ref, set } from "firebase/database";
 import ParseData from '../../utils/ParseData'
 import CoffeeSlider from "../../components/HomeScreen/CoffeeSlider";
 import Success from '../../components/Success'
+import { useTranslation } from 'react-i18next'
+import i18next from '../../Translate/i18n'
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const language = useSelector(state => state.user.t)
+  const { t } = useTranslation();
   const data = [
     { label: 'Espresso', value: '1' },
     { label: 'Americano', value: '2' },
@@ -43,10 +48,13 @@ const Home = () => {
     setCoffeeName(item.label)
 
   }
+  useEffect(()=>{
+    i18next.changeLanguage(language)
+  }, [language])
 
   const Calculate = () => {
     if (small == 0 && medium == 0 && large == 0) {
-      return Alert.alert('Kahvenizin boyutunu seçiniz')
+      return Alert.alert(t('Kahvenizinboyutunuseçiniz'))
     }
     if (small == 1) {
       cup = 'Small'
@@ -131,7 +139,7 @@ const Home = () => {
       <View style={styles.titleContainer}>
         <Text
           style={styles.titleApp}>
-          KAHVE ZAMANI
+          {t("KAHVEZAMANI")}
         </Text>
       </View>
       <View>
@@ -178,16 +186,16 @@ const Home = () => {
         </View>
         <View style={styles.CoffeineContainer}>
           <Text style={styles.coffeineText}>
-            Kafein Oranı: {coffeine}
+            {t("KafeinOranı")} {coffeine}
           </Text>
         </View>
         <Button
           THEME={'Secondary'}
-          ButtonName={'Hesapla'}
+          ButtonName={t('Hesapla')}
           handlePress={Calculate} />
         <Button
           THEME={'Secondary'}
-          ButtonName={'Kaydet'}
+          ButtonName={t('Kaydet')}
           handlePress={SaveData} />
       </View>
       <View style={styles.tabContainer}>
@@ -195,9 +203,9 @@ const Home = () => {
           <Image style={styles.image} source={require('../../Assets/coffee-5.jpg')} />
         </View>
         <View style={styles.dataContainer}>
-          <CoffeeSlider data={TotalCoffee} title={'Kafein'} />
-          <CoffeeSlider data={ScorCoffee} title={'Kahve'} />
-          <CoffeeSlider data={coffeine} title={'Sonuç'} />
+          <CoffeeSlider data={TotalCoffee} title={t('Kafein')} />
+          <CoffeeSlider data={ScorCoffee} title={t('Kahve')} />
+          <CoffeeSlider data={coffeine} title={t('Sonuç')} />
         </View>
       </View>
 

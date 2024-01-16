@@ -2,7 +2,7 @@ import { View, Text, Dimensions, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-native-modal'
 import styles from './CoffeineModal.style'
-import { onValue, ref } from 'firebase/database'
+import { onValue, query, ref, startAt, endAt, orderByChild } from 'firebase/database'
 import { database, auth } from '../../../../firebaseConfig'
 import ParseData from '../../../utils/ParseData'
 import {PieChart} from "react-native-chart-kit";
@@ -10,6 +10,8 @@ import Color from '../../../styles/Color'
 import { format, parseISO, subDays, formatRelative } from 'date-fns'
 import { number } from 'yup'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import i18next from '../../../Translate/i18n'
 
 const CoffeineModal = ({ visible, onClose }) => {
   const [coffeeData, setCoffeeData] = useState([])
@@ -17,12 +19,15 @@ const CoffeineModal = ({ visible, onClose }) => {
   const userId = auth.currentUser.uid
   const screenWidth = Dimensions.get("window").width;
   const UserAge = useSelector(state => state.age)
+  const language = useSelector(state => state.user.t)
+  const { t } = useTranslation();
 
   useEffect(() => {
     setLoading(true)
     const refData = ref(database, `UsedCoffe/${userId}`)
     onValue(refData, (snapshot) => {
       const data = snapshot.val();
+      console.log(data);
       if (data != null) {
         const parsedData = ParseData(data)
         setCoffeeData(parsedData)
@@ -31,10 +36,20 @@ const CoffeineModal = ({ visible, onClose }) => {
     })
   }, [])
 
-  const newCoffeeData = coffeeData.map((item) => item.pushData.coffeine)
-  const ChartLabels = Math.floor(number(newCoffeeData))
+  useEffect(()=>{
+    i18next.changeLanguage(language)
+  }, [language])
+  
 
-  const TimeData = coffeeData.map((item) => item.pushData.date)
+  /**
+   firebase.database().ref().child("Users").orderByChild('regdate')
+  .startAt("2019-01-05").endAt("2019-01-10 23:59:59");
+
+  const mostViewedPosts = query(ref(db, 'posts'), orderByChild('metrics/views'));
+   */
+
+  const newCoffeeData = coffeeData.map((item) => item.pushData.coffeine)
+  
 
   var TotalCoffee = 0
 
@@ -50,18 +65,18 @@ const CoffeineModal = ({ visible, onClose }) => {
   
   const data = [
     {
-      name: "mg Kafein",
+      name: t("mgKafein"),
       population: TotalCoffee,
       color: '#567189',
       legendFontColor: "#567189",
-      legendFontSize: 15
+      legendFontSize: 12,
     },
     {
-      name: "mg Kalan",
-      population: UsedCoffeine,
+      name: t("mgTüketilen"),
+      population: 400,
       color: '#EDE4E0',
       legendFontColor: "#567189",
-      legendFontSize: 15
+      legendFontSize: 12,
     },
   ];
 
@@ -76,13 +91,17 @@ const CoffeineModal = ({ visible, onClose }) => {
         <View style={styles.container}>
           <View style={styles.titleContainer}>
             <View style={styles.titleContainer}>
-            <Text style={styles.title}>Kafein Analizi</Text>
+            <Text style={styles.title}>{t("KafeinAnalizi")}</Text>
             </View>
             <Image source={require('../../../Assets/coffee.png')} style={styles.image}/>
           </View>
           <View style={styles.innerContainer}>
-            <Text style={styles.title}>Bugün Tüketilen Kafein Oranı:  {TotalCoffee} </Text>
-            <Text style={styles.title}>Tüketmeniz Gereken Kafein: {UsedCoffeine} </Text>
+            <Text style={styles.title}>
+              {t("BugünTüketilenKafeinOranı")}{TotalCoffee} 
+            </Text>
+            <Text style={styles.title}>
+              {t("TüketmenizGerekenKafein")} {UsedCoffeine} 
+              </Text>
           </View>
 
           <View style={styles.LineChart} >

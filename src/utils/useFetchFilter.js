@@ -29,7 +29,7 @@ const useFetchFilter = () => {
       }
     })
   }, [])
-  console.log(JSON.stringify(coffeeData))
+  //console.log(JSON.stringify(coffeeData))
 
   return { coffeeData, loading, error }
 }

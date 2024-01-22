@@ -74,7 +74,8 @@ const UserModal = ({ visible, closeModal }) => {
                             <Input
                                 placeholder={t('AdınızıGiriniz')}
                                 onChangeText={handleChange('userName')}
-                                value={values.userName} />
+                                value={values.userName}
+                                 />
                             {errors.userName && touched.userName &&
                                 <Text style={styles.message}>{errors.userName}</Text>}
                             <Input

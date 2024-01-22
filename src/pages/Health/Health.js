@@ -15,7 +15,6 @@ import useFetchFilter from '../../utils/useFetchFilter';
 
 const Health = () => {
   const { coffeeData, loading, error}= useFetch();
-  
   const UserData = useSelector(state => state.user)
   const [modalisVisible, setModalisVisible] = useState(false)
   const language = useSelector(state => state.user.t)
@@ -24,7 +23,6 @@ const Health = () => {
 
   useEffect(() => {
     i18next.changeLanguage(language)
-    
   }, [language])
 
   const renderData = ({ item }) =>

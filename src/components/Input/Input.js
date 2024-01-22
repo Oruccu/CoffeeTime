@@ -10,6 +10,7 @@ const Input = ({ onChangeText, placeholder, value, isSecure }) => {
         value={value}
         secureTextEntry={isSecure}
         autoCapitalize='none'
+        placeholderTextColor={'#979AAA'}
       />
     </View>
   )

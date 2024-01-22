@@ -15,10 +15,13 @@ import i18next from '../../Translate/i18n'
 import { useSelector } from "react-redux";
 import useFecth from "../../utils/useFecth";
 import useFecthFilter from "../../utils/useFetchFilter";
+import UserModal from "../../components/Modal/UserModal/UserModal";
 
 const Home = () => {
-  
+
   const language = useSelector(state => state.user.t)
+  const name = useSelector(state => state.user.user.name)
+  console.log(name)
   const { t } = useTranslation();
   const data = [
     { label: 'Espresso', value: '1' },
@@ -40,7 +43,8 @@ const Home = () => {
   const [large, setLarge] = useState(false);
   const [coffeine, setCoffeine] = useState(0);
   const [coffeeName, setCoffeeName] = useState('');
-  const {coffeeData} = useFecthFilter();
+  const { coffeeData } = useFecthFilter();
+  const [modalisVisible, setModalisVisible] = useState(false)
 
   var cup = '';
   const userMail = auth.currentUser.email
@@ -51,7 +55,7 @@ const Home = () => {
     setCoffeeName(item.label)
 
   }
-  useEffect(()=>{
+  useEffect(() => {
     i18next.changeLanguage(language)
   }, [language])
 
@@ -84,7 +88,19 @@ const Home = () => {
     setLarge(false)
   }
 
+ 
+  function handleInputToggle() {
+    if (name == undefined ) {
+      setModalisVisible(true)
+    }
+    else{
+      setModalisVisible(false)
+    }
+  }
   const SaveData = () => {
+    if (name == undefined ) {
+      setModalisVisible(!modalisVisible)
+    }
     const pushData = {
       user: userMail,
       coffeine: coffeine,
@@ -107,7 +123,7 @@ const Home = () => {
   const newCoffeeData = coffeeData.map((item) => item.pushData.coffeine)
   const SubCoffee = coffeeData.map((item) => item.pushData.coffeequantity)
   var TotalCoffee = 0
-  var ScorCoffee=0
+  var ScorCoffee = 0
   for (let i = 0; i < newCoffeeData.length; i++) {
     const numberData = Number(newCoffeeData[i])
     TotalCoffee = TotalCoffee + numberData
@@ -190,6 +206,10 @@ const Home = () => {
           ButtonName={t('Kaydet')}
           handlePress={SaveData} />
       </View>
+      <UserModal
+        visible={modalisVisible}
+        closeModal={handleInputToggle}
+         />
       <View style={styles.tabContainer}>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={require('../../Assets/coffee-5.jpg')} />

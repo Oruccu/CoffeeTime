@@ -3,7 +3,7 @@ const Slice = createSlice({
     name: 'user',
     initialState: {
         user: {
-            name: '',
+            name: undefined,
             age: '',
             weight: '',
         },

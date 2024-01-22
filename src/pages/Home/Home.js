@@ -13,8 +13,11 @@ import Success from '../../components/Success'
 import { useTranslation } from 'react-i18next'
 import i18next from '../../Translate/i18n'
 import { useSelector } from "react-redux";
+import useFecth from "../../utils/useFecth";
+import useFecthFilter from "../../utils/useFetchFilter";
 
 const Home = () => {
+  
   const language = useSelector(state => state.user.t)
   const { t } = useTranslation();
   const data = [
@@ -37,7 +40,7 @@ const Home = () => {
   const [large, setLarge] = useState(false);
   const [coffeine, setCoffeine] = useState(0);
   const [coffeeName, setCoffeeName] = useState('');
-  const [coffeeData, setCoffeeData] = useState([])
+  const {coffeeData} = useFecthFilter();
 
   var cup = '';
   const userMail = auth.currentUser.email
@@ -101,17 +104,6 @@ const Home = () => {
     setCoffe(0)
   }
 
-
-  useEffect(() => {
-    const refData = ref(database, `UsedCoffe/${userId}`)
-    onValue(refData, (snapshot) => {
-      const data = snapshot.val();
-      if (data != null) {
-        const parsedData = ParseData(data)
-        setCoffeeData(parsedData)
-      }
-    })
-  }, [])
   const newCoffeeData = coffeeData.map((item) => item.pushData.coffeine)
   const SubCoffee = coffeeData.map((item) => item.pushData.coffeequantity)
   var TotalCoffee = 0

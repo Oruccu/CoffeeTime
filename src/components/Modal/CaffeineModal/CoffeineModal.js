@@ -2,51 +2,28 @@ import { View, Text, Dimensions, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-native-modal'
 import styles from './CoffeineModal.style'
-import { onValue, query, ref, startAt, endAt, orderByChild } from 'firebase/database'
-import { database, auth } from '../../../../firebaseConfig'
-import ParseData from '../../../utils/ParseData'
 import {PieChart} from "react-native-chart-kit";
 import Color from '../../../styles/Color'
-import { format, parseISO, subDays, formatRelative } from 'date-fns'
-import { number } from 'yup'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import i18next from '../../../Translate/i18n'
-
+import useFetch from '../../../utils/useFecth';
+import useFetchFilter from '../../../utils/useFetchFilter'
 const CoffeineModal = ({ visible, onClose }) => {
-  const [coffeeData, setCoffeeData] = useState([])
-  const [loading, setLoading] = useState(false);
-  const userId = auth.currentUser.uid
+
+  const {loading, coffeeData} = useFetchFilter();
   const screenWidth = Dimensions.get("window").width;
-  const UserAge = useSelector(state => state.age)
+
   const language = useSelector(state => state.user.t)
   const { t } = useTranslation();
 
-  useEffect(() => {
-    setLoading(true)
-    const refData = ref(database, `UsedCoffe/${userId}`)
-    onValue(refData, (snapshot) => {
-      const data = snapshot.val();
-      console.log(data);
-      if (data != null) {
-        const parsedData = ParseData(data)
-        setCoffeeData(parsedData)
-        setLoading(false)
-      }
-    })
-  }, [])
+  
 
   useEffect(()=>{
     i18next.changeLanguage(language)
   }, [language])
   
 
-  /**
-   firebase.database().ref().child("Users").orderByChild('regdate')
-  .startAt("2019-01-05").endAt("2019-01-10 23:59:59");
-
-  const mostViewedPosts = query(ref(db, 'posts'), orderByChild('metrics/views'));
-   */
 
   const newCoffeeData = coffeeData.map((item) => item.pushData.coffeine)
   
@@ -61,7 +38,7 @@ const CoffeineModal = ({ visible, onClose }) => {
   if(TotalCoffee<400){
     var UsedCoffeine = 400-TotalCoffee
   }
-  console.log(UsedCoffeine)
+ 
   
   const data = [
     {

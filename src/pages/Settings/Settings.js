@@ -9,7 +9,9 @@ import i18next from '../../Translate/i18n'
 import LanguageButton from '../../components/SettingsScreen/LanguageButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLanguage, setUser } from '../../Context/Slice'
+import useFetchFilter from '../../utils/useFetchFilter'
 const Settings = () => {
+  const {coffeeDataoffeeData}= useFetchFilter();
   const [modalisVisible, setModalisVisible] = useState(false)
   const { t } = useTranslation();
   const language = useSelector(state => state.user.t)
@@ -28,6 +30,7 @@ const Settings = () => {
       setLanguage({
         t: 'tr',
       }))
+    //console.log(coffeeData)
     //i18next.changeLanguage('tr')
   }
 

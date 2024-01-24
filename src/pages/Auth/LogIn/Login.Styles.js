@@ -34,5 +34,14 @@ export default StyleSheet.create({
         height:100,
         width:100,
         
+    },
+    forgotPassword:{
+        justifyContent:'flex-end',
+        alignItems:'flex-end',
+        marginRight:20,
+        marginTop:10,
+    },
+    resetPassword:{
+        color:Color.Brown
     }
 })

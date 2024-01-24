@@ -3,9 +3,6 @@ import Color from "../../../styles/Color";
 HEIGHT = Dimensions.get('screen').height
 
 export default StyleSheet.create({
-    modal:{ 
-
-    },
     container:{
         height:HEIGHT/2.3,   
         backgroundColor:Color.Cream,

@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import Settings from './pages/Settings'
 import Context from './pages/Auth/Context'
 import LogIn from './pages/Auth/LogIn'
+import ResetPassword from './pages/Auth/ResetPassword'
 import Register from './pages/Auth/Register'
 import { auth } from '../firebaseConfig'
 import { Provider } from 'react-redux';
@@ -68,6 +69,7 @@ const AuthStack = () => {
       <Stack.Screen name='Context' component={Context} />
       <Stack.Screen name='LogIn' component={LogIn} />
       <Stack.Screen name='Register' component={Register} />
+      <Stack.Screen name='ResetPassword' component={ResetPassword} />
     </Stack.Navigator>
   )
 }

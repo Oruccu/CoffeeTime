@@ -9,7 +9,6 @@ import { database, auth } from "../../../firebaseConfig";
 import { onValue, push, ref, set } from "firebase/database";
 import ParseData from '../../utils/ParseData'
 import CoffeeSlider from "../../components/HomeScreen/CoffeeSlider";
-import Success from '../../components/Success'
 import { useTranslation } from 'react-i18next'
 import i18next from '../../Translate/i18n'
 import { useSelector } from "react-redux";

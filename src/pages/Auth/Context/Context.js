@@ -9,11 +9,13 @@ import { useSelector } from 'react-redux'
 import i18next from '../../../Translate/i18n'
 import { useTranslation } from 'react-i18next'
 
-const Context = ({navigation}) => {
+
+const Context = ({ navigation }) => {
+ 
   const language = useSelector(state => state.user.t)
   const { t } = useTranslation();
 
-  useEffect(()=>{
+  useEffect(() => {
     i18next.changeLanguage(language)
   }, [language])
 
@@ -22,21 +24,20 @@ const Context = ({navigation}) => {
   }
 
   function LogIn() {
-    navigation.navigate('LogIn')  
+    navigation.navigate('LogIn')
   }
   return (
     <SafeAreaView style={styles.container}>
-      <ImageCard/>
-      <Title/>
+      <ImageCard />
+      <Title />
       <View style={styles.btnContainer}>
-      <Button ButtonName={t('KayıtOl')} THEME={'Primary'} handlePress={Register}/>
-      <Button ButtonName={t('GirişYap')} THEME={'Secondary'} handlePress={LogIn}/>
+        <Button ButtonName={t('KayıtOl')} THEME={'Primary'} handlePress={Register} />
+        <Button ButtonName={t('GirişYap')} THEME={'Secondary'} handlePress={LogIn} />
       </View>
-      <AuthGoogle/>
+ 
     </SafeAreaView>
   )
 }
 
 export default Context
 
- 

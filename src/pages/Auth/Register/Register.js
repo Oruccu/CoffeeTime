@@ -6,14 +6,17 @@ import Button from '../../../components/Button'
 import * as yup from 'yup'
 import { Formik } from 'formik'
 import { auth } from '../../../../firebaseConfig'
-import { createUserWithEmailAndPassword, sendEmailVerification, sendSignInLinkToEmail } from 'firebase/auth'
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendSignInLinkToEmail } from 'firebase/auth'
 import i18next from '../../../Translate/i18n'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserSession } from '../../../Context/Slice'
 const Register = ({ navigation }) => {
   const language = useSelector(state => state.user.t)
   const { t } = useTranslation();
-
+  const dispatch = useDispatch();
+  const kontrol = useSelector(state => state.user.userSession)
+  console.log(kontrol)
   useEffect(() => {
     i18next.changeLanguage(language)
   }, [language])
@@ -24,23 +27,44 @@ const Register = ({ navigation }) => {
       password = '',
       confirmPassword = ''
   }
-
-  function CreateUser(values) {
+  const CreateUser = async (values) => {
     console.log(values)
-    createUserWithEmailAndPassword(auth, values.email, values.password)
-      .then((user) => {
-        sendSignInLinkToEmail(auth, values.email, actionCodeSettings)
-          .then(() => {
-            console.log('başarılı')
-            navigation.navigate('LogIn')
-          }).catch((err) => {
-            console.log('hata oluştu')
-          })
-      })
-      .catch((err) => {
-        console.log('bir hata oluştu')
+    try {
+      await createUserWithEmailAndPassword(auth, values.email, values.password)
+
+      await sendEmailVerification(auth.currentUser).then((user) => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            if (user.emailVerified) {
+              console.log('E-posta doğrulandı!');
+              dispatch(
+                setUserSession({
+                  userSession:true,
+                })
+              )
+            } else {
+              dispatch(
+                setUserSession({
+                  userSession:false,
+                })
+              )
+            }
+          } else {
+            auth.signOut();
+            console.log('Kullanıcı oturumu kapattı veya hiç açmamış.');
+          }
+      }).catch((err)=>{
         console.log(err)
       })
+      console.log('Epostaya mail gitti')
+      })
+    }
+  
+    catch (error) {
+      console.log('errorr')
+      console.log(error)
+    }
+
   }
   function goLogIn() {
     navigation.navigate('LogIn')

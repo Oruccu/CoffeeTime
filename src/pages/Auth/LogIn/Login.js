@@ -27,7 +27,8 @@ const Login = ({ navigation }) => {
 
   function SingIn(values) {
     signInWithEmailAndPassword(auth, values.email, values.password).then(() => {
-      navigation.navigate('Root')
+      
+      //navigation.navigate('Root')
     }).catch((err) => {
       console.log(err)
     })

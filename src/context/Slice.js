@@ -7,7 +7,8 @@ const Slice = createSlice({
             age: '',
             weight: '',
         },
-        t: 'a'
+        t: 'tr',
+        session:'false'
     },
     reducers: {
         setUser(state, action) {
@@ -22,11 +23,14 @@ const Slice = createSlice({
         setLanguage(state, action){
             const selectLanguage = action.payload.t;
             state.t = selectLanguage;
-
-        }
+        },
+        setUserSession(state, action){
+            const userSession = action.payload.session;
+            state.session = userSession;
+        },
 
     }
 })
 
 export default Slice;
-export const { setUser, setLanguage } = Slice.actions;
+export const { setUser, setLanguage,setUserSession } = Slice.actions;

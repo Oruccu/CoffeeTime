@@ -52,7 +52,6 @@ const Home = () => {
   function selectCoffee(item) {
     setValue(item.value)
     setCoffeeName(item.label)
-
   }
   useEffect(() => {
     i18next.changeLanguage(language)
@@ -214,8 +213,8 @@ const Home = () => {
           <Image style={styles.image} source={require('../../Assets/coffee-5.jpg')} />
         </View>
         <View style={styles.dataContainer}>
-          <CoffeeSlider data={TotalCoffee} title={t('Kafein')} />
           <CoffeeSlider data={ScorCoffee} title={t('Kahve')} />
+          <CoffeeSlider data={TotalCoffee} title={t('Kafein')} />
           <CoffeeSlider data={coffeine} title={t('Sonuç')} />
         </View>
       </View>

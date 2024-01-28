@@ -21,9 +21,13 @@ const useFetch = () => {
                 setLoading(false)
                 setError(false)
             }
+            else {
+                setError(true)
+                setLoading(false)
+                setError(false)
+            }
         })
     }, [])
-    //console.log(JSON.stringify(coffeeData))
 
     return { coffeeData, loading, error }
 }

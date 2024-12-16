@@ -76,6 +76,7 @@ const Home = () => {
         const data = snapshot.val();
         const newdata = data * coffee
         setCoffeine(newdata)
+        console.log(newdata)
       })
 
     } catch (error) {

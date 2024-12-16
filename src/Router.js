@@ -17,81 +17,94 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 import { store } from './Context/Store';
 import Loading from './components/Loading';
 import { setUserSession } from './Context/Slice';
+import { el } from 'date-fns/locale';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Root() {
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          backgroundColor: '#fffefc',
-        },
-        tabBarInactiveTintColor: '#d4ba99',
-        tabBarActiveTintColor: '#AA6B55'
-      }}
-    >
-      <Tab.Screen
-        name='Home'
-        component={Home}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon name="home" size={26} color={color} />
-          )
+    <Provider store={store}>
+
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            backgroundColor: '#fffefc',
+          },
+          tabBarInactiveTintColor: '#d4ba99',
+          tabBarActiveTintColor: '#AA6B55'
         }}
-      />
-      <Tab.Screen
-        name='Health'
-        component={Health}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon name="hearto" size={26} color={color} />
-          )
-        }} />
-      <Tab.Screen
-        name='Settings'
-        component={Settings}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon name="setting" size={26} color={color} />
-          )
-        }} />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name='Home'
+          component={Home}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="home" size={26} color={color} />
+            )
+          }}
+        />
+        <Tab.Screen
+          name='Health'
+          component={Health}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="hearto" size={26} color={color} />
+            )
+          }} />
+        <Tab.Screen
+          name='Settings'
+          component={Settings}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="setting" size={26} color={color} />
+            )
+          }} />
+      </Tab.Navigator>
+    </Provider>
   )
 }
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} >
-      <Stack.Screen name='Context' component={Context} />
-      <Stack.Screen name='LogIn' component={LogIn} />
-      <Stack.Screen name='Register' component={Register} />
-      <Stack.Screen name='ResetPassword' component={ResetPassword} />
-    </Stack.Navigator>
+    <Provider store={store}>
+      <Stack.Navigator screenOptions={{ headerShown: false }} >
+        <Stack.Screen name='Context' component={Context} />
+        <Stack.Screen name='LogIn' component={LogIn} />
+        <Stack.Screen name='Register' component={Register} />
+        <Stack.Screen name='ResetPassword' component={ResetPassword} />
+      </Stack.Navigator>
+    </Provider>
   )
 }
 
 export default function App() {
   const [loading, setLoading] = useState(false);
   const [userSession, setUserSession] = React.useState()
+  const userState= auth.currentUser;
 
-  
   useEffect(() => {
-    setLoading(true)
-    auth.onAuthStateChanged(
-      user => {
-        setUserSession(!!user)
-        setLoading(false)
-      })
-    }, [])
-    
-    if (loading == true) {
-      return <Loading />
-    }
+  
+     auth.onAuthStateChanged(
+       user => {
+         if(user){
+           setUserSession(!!user)
+           setLoading(false)
+           console.log('başardın')
+         }
+         else{
+          setUserSession(false)
+         }
+       })
+
+  }, [])
+
+  if (loading == true) {
+    return <Loading />
+  }
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -102,7 +115,7 @@ export default function App() {
           }}>{
             !userSession ? (
               <>
-              <Stack.Screen name='AuthStack' component={AuthStack} />
+                <Stack.Screen name='AuthStack' component={AuthStack} />
               </>
             ) : (
 

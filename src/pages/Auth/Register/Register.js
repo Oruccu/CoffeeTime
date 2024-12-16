@@ -30,44 +30,34 @@ const Register = ({ navigation }) => {
   const CreateUser = async (values) => {
     console.log(values)
     try {
-      await createUserWithEmailAndPassword(auth, values.email, values.password)
-
-      await sendEmailVerification(auth.currentUser).then((user) => {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            if (user.emailVerified) {
-              console.log('E-posta doğrulandı!');
-              dispatch(
-                setUserSession({
-                  userSession:true,
-                })
-              )
-            } else {
-              dispatch(
-                setUserSession({
-                  userSession:false,
-                })
-              )
-            }
-          } else {
-            auth.signOut();
-            console.log('Kullanıcı oturumu kapattı veya hiç açmamış.');
-          }
-      }).catch((err)=>{
-        console.log(err)
-      })
-      console.log('Epostaya mail gitti')
-      })
+      const user = await userCreate(values.email, values.password)
+      
     }
-  
     catch (error) {
-      console.log('errorr')
-      console.log(error)
+   
     }
 
   }
+
   function goLogIn() {
     navigation.navigate('LogIn')
+  }
+
+  const userCreate = async()=>{
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
+    } catch (error) {
+      
+    }
+  }
+
+  const emailVerification = async() =>{
+    const user = auth.currentUser;
+    try {
+      await 
+    } catch (error) {
+      
+    }
   }
 
   const schemaRegister = yup.object({

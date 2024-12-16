@@ -15,8 +15,11 @@ const Settings = () => {
   const [modalisVisible, setModalisVisible] = useState(false)
   const { t } = useTranslation();
   const language = useSelector(state => state.user.t)
+  const userState = auth.currentUser;
   function LogOut() {
-    auth.signOut();
+    if(userState){
+      auth.signOut();
+    }
   }
   
   function handleInputToggle() {

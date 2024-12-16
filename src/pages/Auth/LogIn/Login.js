@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 import { Formik } from 'formik'
 import { auth } from '../../../../firebaseConfig'
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth'
+import firebase from 'firebase/app'
 import { useTranslation } from 'react-i18next'
 import i18next from '../../../Translate/i18n'
 import { useSelector } from 'react-redux'
@@ -25,13 +26,19 @@ const Login = ({ navigation }) => {
     confirmPassword = ''
   }
 
-  function SingIn(values) {
-    signInWithEmailAndPassword(auth, values.email, values.password).then(() => {
-      
-      //navigation.navigate('Root')
-    }).catch((err) => {
-      console.log(err)
-    })
+  const SingIn= async (values) => {
+    try {
+      const usercheck = await signInWithEmailAndPassword(auth, values.email, values.password)
+      console.log('Giriş ekranın içindesin')
+      console.log(usercheck.user.emailVerified)
+
+      if(usercheck.user && usercheck.user.emailVerified ){
+        //navigation.navigate('Root')
+        console.log('Roota yönlendirmeli')
+      }
+    } catch (error) {
+      console.log('şuan bulunamadı')
+    } 
   }
 
   function goRegister() {
